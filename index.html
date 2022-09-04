@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Test For Sumer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+    $( document ).ready(function() {
+
+        let a = [ [ 0, 1, 2, 3 ],
+          [ 4, 5, 6, 7 ],
+          [ 8, 9, 10, 11 ],
+          [ 12, 13, 14, 15 ]
+        ];
+        console.log( "The Array ", a );
+        $("#moveToSelect").change(function(){
+            var position = $(this).val();
+            var currentPosition = $('#currentPosition').val();
+            currentPosition = parseInt(currentPosition);
+            if(position != '') {
+
+                var newPosition  = moveMatrix(position, currentPosition, a);
+                if(newPosition !== undefined) {
+
+                    $('#currentPosition').val(newPosition);   
+                    $('#currentPositionLabel').html(newPosition);
+                    // $('#moveToSelect').prop('selectedIndex',0)
+
+                }
+            }
+        });
+
+
+        function moveMatrix(position, currentPosition, a)
+        {
+            // code for move right
+            if(position == 'right') {
+                for(var i = 0; i < a.length; i++) {
+                    var subA = a[i];
+                    for(var j = 0; j < subA.length; j++) {
+                        if(subA[j] == currentPosition) {
+                            return subA[j+1];
+                        }
+                    }
+                }
+                
+            }
+            // code for move left
+            if(position == 'left') {
+                for(var i = 0; i < a.length; i++) {
+                    var subA = a[i];
+                    for(var j = 0; j < subA.length; j++) {
+                        if(subA[j] == currentPosition && j < 4) {
+                            return subA[j-1];
+                        }
+                    }
+                }
+            }
+            // code for move down
+            if(position == 'down') {
+                for(var i = 0; i < a.length; i++) {
+                    if(currentPosition < 12) {
+                        var subA = a[i];
+                        var subB = a[i+1];
+                        for(var j = 0; j < subA.length; j++) {
+                            if(subA[j] == currentPosition ) {
+                                return subB[j];
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            // code for move up
+            if(position == 'up') {
+                for(var i = 0; i < a.length; i++) {
+                    if(currentPosition > 3) {
+                        var subA = a[i];
+                        var subB = a[i-1];
+                        for(var j = 0; j < subA.length; j++) {
+                            if(subA[j] == currentPosition ) {
+                                return subB[j];
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+
+    });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Test For Sumer</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">Move To:</label>
+                    <select id="moveToSelect" name="moveToSelect" class="form-control">
+                        <option value="">Select</option>
+                        <option value="right">Right</option>
+                        <option value="left">Left</option>
+                        <option value="up">Up</option>
+                        <option value="down">Down</option>
+                    </select>
+                    <input class="form-control" type="hidden" value="0" id="currentPosition" name="currentPosition" readonly>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
+                <h4>Result</h4>
+                <p><label>Current Position of Ball</label> : <label id="currentPositionLabel">0</label></p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
